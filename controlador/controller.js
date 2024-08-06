@@ -1,25 +1,25 @@
-const cnct = require('../hots/cnct');
+const cnct = require('../host/cnct');
 // SELECIONAR TODOS
 const getAllTransactions = (req, res) => {
-    cnct.query('select * from transaction', (err, results) => {
+    cnct.query('select * from products', (err, results) => {
         if (err) {
-            console.error('Erro ao obter transações', err);
-            res.status(500).send('Erro ao obter transações');
+            console.error('Erro ao obter produto', err);
+            res.status(500).send('Erro ao obter produto');
             return;
         }
         res.json(results);
     });
 };
 // ADICIONAR PRODUTOS
-const addAllTransactions = (req, res) => {
+const addTransactions = (req, res) => {
     const { nome_produto, desc_produto, categoria, preco, QNT_STQ, data_validade } = req.body;
     cnct.query(
-        'insert into transaction (nome_produto, desc_produto, categoria, preco, QNT_STQ, data_validade) VALUES (?, ?, ?, ?, ?, ?)',
+        'insert into products (nome_produto, desc_produto, categoria, preco, QNT_STQ, data_validade) VALUES (?, ?, ?, ?, ?, ?)',
         [nome_produto, desc_produto, categoria, preco, QNT_STQ, data_validade],
         (err, results) => {
             if (err) {
-                console.error('Erro ao adicionar transação', err);
-                res.status(500).send('Erro ao adicionar transação');
+                console.error('Erro ao adicionar produto', err);
+                res.status(500).send('Erro ao adicionar produto');
                 return;
             }
             res.send('Transação adicionada com sucesso');
@@ -31,12 +31,12 @@ const updateTransactionsPut = (req, res) => {
     const { id } = req.params;
     const { nome_produto, desc_produto, categoria, preco, QNT_STQ, data_validade } = req.body;
     cnct.query(
-        'update transaction set nome_produto = ?, desc_produto = ?, categoria = ?, preco = ?, QNT_STQ = ?, data_validade = ? WHERE id = ?',
+        'update products set nome_produto = ?, desc_produto = ?, categoria = ?, preco = ?, QNT_STQ = ?, data_validade = ? WHERE id = ?',
         [nome_produto, desc_produto, categoria, preco, QNT_STQ, data_validade, id],
         (err, results) => {
             if (err) {
-                console.error('Erro ao atualizar transação', err);
-                res.status(500).send('Erro ao atualizar transação');
+                console.error('Erro ao atualizar produto', err);
+                res.status(500).send('Erro ao atualizar produto');
                 return;
             }
             res.send('Transação atualizada com sucesso');
@@ -58,15 +58,15 @@ const updateTransactionPatch = (req, res) => {
     values.push(id);
 
     cnct.query(
-        `update transaction set ${query.join(', ')} where id = ?`,
+        `update products set ${query.join(', ')} where id = ?`,
         values,
         (err, results) => {
             if (err) {
-                console.error('Erro ao atualizar transação', err);
-                res.status(500).send('Erro ao atualizar transação');
+                console.error('Erro ao atualizar produto', err);
+                res.status(500).send('Erro ao atualizar produto');
                 return;
             }
-            res.send('Transação atualizada com sucesso');
+            res.send('produto atualizado com sucesso');
         }
     );
 };
@@ -74,22 +74,22 @@ const updateTransactionPatch = (req, res) => {
 const deleteTransaction = (req, res) => {
     const { id } = req.params;
     cnct.query(
-        'delete from transaction where id = ?',
+        'delete from products where id = ?',
         [id],
         (err, results) => {
             if (err) {
-                console.error('Erro ao deletar transação', err);
-                res.status(500).send('Erro ao deletar transação');
+                console.error('Erro ao deletar produto', err);
+                res.status(500).send('Erro ao deletar produto');
                 return;
             }
-            res.send('Transação deletada com sucesso');
+            res.send('produto deletada com sucesso');
         }
     );
 };
 
 module.exports = {
     getAllTransactions,
-    addAllTransactions,
+    addTransactions,
     updateTransactionsPut,
     updateTransactionPatch,
     deleteTransaction
