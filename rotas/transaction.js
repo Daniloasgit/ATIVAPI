@@ -1,20 +1,26 @@
+// Importa o módulo express para criar rotas e manipular requisições HTTP
 const express = require('express');
-const router =  express.Router();
-const controller = require ('../controlador/controller');
 
-//seleciona todos os produtos
-router.get('/',controller.getAllTransactions);
+// Cria um roteador para definir as rotas relacionadas a um recurso específico (neste caso, transações)
+const router = express.Router();
 
-//adiciona um novo produto
-router.post('/',controller.addTransactions);
+// Importa o controlador que contém a lógica para lidar com as requisições
+const controller = require('../controlador/controller');
 
-//atualiza um produto de forma total
-router.put('/:id',controller.updateTransactionsPut);
+// Define a rota para obter todos os produtos (ou transações) e associa à função do controlador responsável
+router.get('/', controller.getAllTransactions);
 
-//atualiza um produto de forma parcial
-router.patch('/:id',controller.updateTransactionPatch);
+// Define a rota para adicionar um novo produto (ou transação) e associa à função do controlador responsável
+router.post('/', controller.addTransactions);
 
-//deleta um produto por id
-router.delete('/:id',controller.deleteTransaction);
+// Define a rota para atualizar um produto (ou transação) de forma total, usando o método PUT, e associa à função do controlador responsável
+router.put('/:id', controller.updateTransactionsPut);
 
+// Define a rota para atualizar um produto (ou transação) de forma parcial, usando o método PATCH, e associa à função do controlador responsável
+router.patch('/:id', controller.updateTransactionPatch);
+
+// Define a rota para deletar um produto (ou transação) por ID, usando o método DELETE, e associa à função do controlador responsável
+router.delete('/:id', controller.deleteTransaction);
+
+// Exporta o roteador para que possa ser utilizado em outras partes da aplicação
 module.exports = router;
